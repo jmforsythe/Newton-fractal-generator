@@ -15,15 +15,13 @@ NewtonFractal::NewtonFractal(Polynomial &p, Complex &origin, double width, doubl
 }
 
 void NewtonFractal::printRoots() {
-	int i;
-	for (i=0; i<_roots.size(); i++) {
+	for (size_t i=0; i<_roots.size(); i++) {
 		std::cout << _roots[i] << std::endl;
 	}
 }
 	
 int NewtonFractal::findRoot(Complex root) {
-	int i;
-	for (int i=0; i<_roots.size(); i++) {
+	for (size_t i=0; i<_roots.size(); i++) {
 		if ((root - _roots[i]).abs2() < Newton::TOL2) return i;
 	}
 	return -1;
@@ -58,8 +56,11 @@ Colour * NewtonFractal::createFractal(bool colorIterations) {
 				}
 				c = colour_array[rootIndex % numColours];
 				if (_colorIterations) {
-					double intensity = 1.0f - (double)_iterator.getNumIterations()/(double)Newton::MAXITER;
-					out_array[array_index] = c.scale(intensity);
+					Colour c_scaled(c);
+					for (int k=0; k<_iterator.getNumIterations(); k++) {
+						c_scaled = c_scaled.scale(0.98);
+					}
+					out_array[array_index] = c_scaled;
 				} else {
 					out_array[array_index] = c;
 				}
