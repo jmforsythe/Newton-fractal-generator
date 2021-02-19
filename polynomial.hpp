@@ -2,7 +2,7 @@
 #define POLYNOMIAL_H
 
 #include <vector>
-#include "complex.h"
+#include "complex.hpp"
 
 class Polynomial {
 private:

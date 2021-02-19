@@ -1,5 +1,6 @@
-#include "colour.h"
 #include <iostream>
+
+#include "colour.hpp"
 
 Colour::Colour() {
 	_r = 0;

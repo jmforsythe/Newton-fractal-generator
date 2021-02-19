@@ -1,9 +1,9 @@
 #include <vector>
 #include <iostream>
 
-#include "newton.h"
-#include "polynomial.h"
-#include "complex.h"
+#include "newton.hpp"
+#include "polynomial.hpp"
+#include "complex.hpp"
 
 Newton::Newton() {
 	std::vector<Complex> coeffs = {Complex()};

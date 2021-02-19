@@ -2,7 +2,7 @@
 #include <fstream>
 #include <regex>
 #include <string>
-#include "newtonfractal.h"
+#include "newtonfractal.hpp"
 
 int main(int argc, char* argv[]) {
 	std::vector<Complex> coeff;

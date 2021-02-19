@@ -3,8 +3,7 @@
 #include <sstream>
 #include <iostream>
 
-#include "complex.h"
-#include "polynomial.h"
+#include "polynomial.hpp"
 
 
 Polynomial::Polynomial(std::vector<Complex> coeff) {

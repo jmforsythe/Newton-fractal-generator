@@ -1,8 +1,8 @@
 #ifndef NEWTON_H
 #define NEWTON_H
 
-#include "polynomial.h"
-#include "complex.h"
+#include "polynomial.hpp"
+#include "complex.hpp"
 
 class Newton {
 private:
