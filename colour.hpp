@@ -5,6 +5,7 @@ class Colour {
 public:
 	Colour();
 	Colour(int r, int g, int b);
+	Colour(const Colour& c);
 	Colour scale(double intensity);
 	int _r, _g, _b;
 };

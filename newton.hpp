@@ -13,7 +13,7 @@ private:
 	int _err;
 
 public:
-	static const int MAXITER = 40;
+	static const int MAXITER = 4000;
 	static constexpr double TOL = 1.0e-10;
 	static constexpr double TOL2 = TOL*TOL;
 	
