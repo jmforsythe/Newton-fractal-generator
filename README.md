@@ -3,6 +3,10 @@ Given a complex polynomial, generate an image using Newton's method.
 
 ![x^3 - 1 in the range \[-1,1\]X\[-1,1\]](readme_image.png)
 
+*x^3 - 1 in the range \[-1,1\]X\[-1,1\]*
+
+*To generate this, run ./newtonfractal -1+0i 0+0i 0+0i 1+0i*
+
 This project allowed me to learn
 * C++ object oriented programming
 * How to generate ppm images in C++
@@ -25,3 +29,6 @@ Currently the following parameters are hardcoded, but I aim to let the user chan
 * The colours used
 * Whether or not to use shading based on time to converge
 * Max iteration depth
+
+Additionally, I aim to add:
+* Exponential smoothing of the image to blend different shades of the same regions together
