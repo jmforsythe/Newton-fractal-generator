@@ -11,7 +11,7 @@ To run, **./newtonfractal [polynomial coefficients]**.
 
 Images are generated as .ppm files
 
-The polynomial coefficients go in ascending order of powers of x, and each coefficient should be of the form **x+yi** or **x-yi**.
+The polynomial coefficients go in ascending order of powers of x, separated by spaces, and each coefficient should be of the form **x+yi** or **x-yi**.
 
 The regex for a valid coefficient is **"(.\*)([+-].\*)i"**
 
