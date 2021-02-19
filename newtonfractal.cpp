@@ -1,8 +1,8 @@
-#include "newtonfractal.h"
-
 #include <stdio.h>
 #include <iostream>
 #include <string>
+
+#include "newtonfractal.hpp"
 
 NewtonFractal::NewtonFractal(Polynomial &p, Complex &origin, double width, double height) {
 	_roots = std::vector<Complex>();

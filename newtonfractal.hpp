@@ -4,11 +4,11 @@
 #include <iostream>
 #include <vector>
 
-#include "newton.h"
-#include "polynomial.h"
-#include "complex.h"
+#include "newton.hpp"
+#include "polynomial.hpp"
+#include "complex.hpp"
 
-#include "colour.h"
+#include "colour.hpp"
 
 class NewtonFractal {
 private:
