@@ -1,6 +1,8 @@
 # Newton-fractal-generator
 Given a complex polynomial, generate an image using Newton's method.
 
+![x^3 - 1 in the range \[-1,1\]X\[-1,1\]](readme_image.png)
+
 This project allowed me to learn
 * C++ object oriented programming
 * How to generate ppm images in C++
