@@ -32,3 +32,4 @@ Currently the following parameters are hardcoded, but I aim to let the user chan
 
 Additionally, I aim to add:
 * Exponential smoothing of the image to blend different shades of the same regions together
+* Multiprocessing support to divide the image into sections to generate concurrently
