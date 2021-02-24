@@ -103,14 +103,28 @@ int main(int argc, char* argv[]) {
 	
 	std::ofstream image_file(filename);
 	
+	// P3 = ascii, P6 = binary
+	/*
 	image_file << "P3 " << nfp.pixel_width << " " << nfp.pixel_height << " " << 255 << std::endl;
 	
 	for (int i=0; i<nfp.pixel_height*nfp.pixel_width; i++) {
 		auto c = fractal_colour_array[i];
 		image_file << (int)c._r << " " << (int)c._g << " " << (int)c._b << " ";
-		if (i%nfp.pixel_width == 0) {
+		if ((i+1)%nfp.pixel_width == 0) {
 			image_file << std::endl;
 		}
 	}
+	*/
+	
+	image_file << "P6 " << nfp.pixel_width << " " << nfp.pixel_height << " " << 255 << std::endl;
+	
+	for (int i=0; i<nfp.pixel_height*nfp.pixel_width; i++) {
+		auto c = fractal_colour_array[i];
+		image_file << (char)c._r << (char)c._g << (char)c._b;
+		if ((i+1)%nfp.pixel_width == 0) {
+			image_file << std::endl;
+		}
+	}
+	
 	return 0;
 };
