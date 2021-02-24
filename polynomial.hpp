@@ -7,15 +7,15 @@
 class Polynomial {
 private:
 	std::vector<Complex> _coeff;
-	int _degree;
+	size_t _degree;
 
 public:
 	Polynomial(std::vector<Complex> coeff);
 	Polynomial();
 	
-	int getDegree();
+	size_t get_degree();
 	
-	std::string toString();
+	std::string to_string();
 	
 	Complex evaluate(Complex z);
 	

@@ -27,58 +27,45 @@ Polynomial::Polynomial() {
 	_degree = 0;
 }
 
-int Polynomial::getDegree() {
+size_t Polynomial::get_degree() {
 	return _degree;
 }
 
-std::string Polynomial::toString() {
+std::string Polynomial::to_string() {
 	std::stringstream ss;
-	int i;
+	size_t i;
 	for (i=0; i<=_degree; i++) {
-		if (i == 0) ss << "(" << _coeff[i].toString() << ")";
-		else if (i == 1) ss << "+(" << _coeff[i].toString() << ")X";
-		else ss << "+(" << _coeff[i].toString() << ")X^" << i;
+		if (i == 0) ss << "(" << _coeff[i].to_string() << ")";
+		else if (i == 1) ss << "+(" << _coeff[i].to_string() << ")X";
+		else ss << "+(" << _coeff[i].to_string() << ")X^" << i;
 	}
 	return ss.str();
 }
 
 Complex Polynomial::evaluate(Complex z) {
 	if (_degree == 0) return _coeff[0];
-	std::vector<Complex> truncCoeff = _coeff;
-	truncCoeff.erase(truncCoeff.begin());
-	Polynomial truncPoly = Polynomial(truncCoeff);
-	return _coeff[0] + z*truncPoly.evaluate(z);
+	std::vector<Complex> trunc_coeff = _coeff;
+	trunc_coeff.erase(trunc_coeff.begin());
+	Polynomial trunc_poly = Polynomial(trunc_coeff);
+	return _coeff[0] + z*trunc_poly.evaluate(z);
 }
 
 Polynomial Polynomial::derivative() {
-	std::vector<Complex> derivCoeff;
+	std::vector<Complex> deriv_coeff;
 	if (_degree == 0) {
-		derivCoeff = {Complex(0)};
+		deriv_coeff = {Complex(0)};
 	} else {
-		derivCoeff = _coeff;
-		int i;
-		for (i=0; i<=_degree; i++) {
-			derivCoeff[i] = derivCoeff[i] * i;
+		deriv_coeff = _coeff;
+		for (size_t i=0; i<=_degree; i++) {
+			deriv_coeff[i] = deriv_coeff[i] * i;
 		}
-		derivCoeff.erase(derivCoeff.begin());
+		deriv_coeff.erase(deriv_coeff.begin());
 	}
-	Polynomial derivPoly = Polynomial(derivCoeff);
-	return derivPoly;
+	Polynomial deriv_poly = Polynomial(deriv_coeff);
+	return deriv_poly;
 }
 
 std::ostream & operator<< (std::ostream & str, Polynomial & p) {
-	str << p.toString();
+	str << p.to_string();
 	return str;
 }
-
-/*
-int main() {
-	std::vector<Complex> coeffs = {Complex(1),Complex(),Complex(1),Complex(1)};
-	Polynomial p(coeffs);
-	std::cout << p << std::endl;
-	std::cout << p.evaluate(Complex(1)) << std::endl;
-	Polynomial q = p.derivative();
-	std::cout << q << std::endl;
-	return 0;
-}
-*/
