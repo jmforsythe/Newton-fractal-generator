@@ -10,10 +10,10 @@ public:
 	Complex(double x);
 	Complex();
 	
-	double getReal() const;
-	double getImag() const;
+	double get_real() const;
+	double get_imag() const;
 	
-	std::string toString() const;
+	std::string to_string() const;
 	
 	double abs2() const;
 	
