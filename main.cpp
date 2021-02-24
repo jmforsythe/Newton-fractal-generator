@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
 		}
 		Polynomial p(coeff);
 		if (nfp.verbose) std::cout << p << std::endl;
-		if (p.getDegree() == 0) {
+		if (p.get_degree() == 0) {
 			std::cout << "Cannot perform process on constant polynomial" << std::endl;
 			return 0;
 		}
@@ -60,19 +60,19 @@ int main(int argc, char* argv[]) {
 	}
 	
 	NewtonFractal nf(nfp);
-	Colour *fractal_colour_array = nf.createFractal();
+	Colour *fractal_colour_array = nf.create_fractal();
 	
-	std::string filename = nfp.p.toString() + ".ppm";
+	std::string filename = nfp.p.to_string() + ".ppm";
 	
-	std::ofstream ImageFile(filename);
+	std::ofstream image_file(filename);
 	
-	ImageFile << "P3 " << nfp.pixel_width << " " << nfp.pixel_height << " " << 255 << std::endl;
+	image_file << "P3 " << nfp.pixel_width << " " << nfp.pixel_height << " " << 255 << std::endl;
 	
 	for (int i=0; i<nfp.pixel_height*nfp.pixel_width; i++) {
 		auto c = fractal_colour_array[i];
-		ImageFile << (int)c._r << " " << (int)c._g << " " << (int)c._b << " ";
+		image_file << (int)c._r << " " << (int)c._g << " " << (int)c._b << " ";
 		if (i%nfp.pixel_width == 0) {
-			ImageFile << std::endl;
+			image_file << std::endl;
 		}
 	}
 	return 0;
