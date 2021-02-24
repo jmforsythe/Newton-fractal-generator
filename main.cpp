@@ -5,6 +5,55 @@
 
 #include "newtonfractal.hpp"
 
+std::vector<std::string> flags = {"-c", "-v", "-pw", "-ph", "-o", "-cw", "-ch", "-p", "--noshading", "--maxdepth"};
+
+int get_next_flag(int arg_pos, int argc, char* argv[]) {
+	for (int i=arg_pos+1; i<argc; i++) {
+		// if argv[i] in flags
+		if (std::find(flags.begin(), flags.end(), argv[i]) != flags.end()) return i;
+	}
+	return argc;
+}
+
+Complex char_arr_to_complex(char * char_arr) {
+	std::regex expression("(.*)([+-].*)i");
+	std::smatch match;
+	std::string str(char_arr);
+	std::regex_match(str, match, expression);
+	switch (match.size()) {
+		case 2:
+			return Complex(std::stod(match[1]));
+		case 3:
+			return Complex(std::stod(match.str(1)), std::stod(match.str(2)));
+		default:
+			return Complex();
+	}
+}
+
+Polynomial parse_coeff(int arg_pos, int last_pos, char* argv[]) {
+	std::vector<Complex> coeff;
+		std::regex expression("(.*)([+-].*)i");
+		for (int i=arg_pos; i<last_pos; i++) {
+			coeff.push_back(char_arr_to_complex(argv[i]));
+		}
+	Polynomial p(coeff);
+	return Polynomial(coeff);
+}
+
+void parse_arg(int arg_pos, int argc, char* argv[], struct NFParams &nfp) {
+	std::string arg = argv[arg_pos];
+	if (arg == "-v") nfp.verbose=true;
+	else if (arg == "-c") nfp.p = parse_coeff(arg_pos+1, get_next_flag(arg_pos, argc, argv), argv);
+	else if (arg == "-pw") nfp.pixel_width = std::stoi(argv[arg_pos+1]);
+	else if (arg == "-ph") nfp.pixel_height = std::stoi(argv[arg_pos+1]);
+	else if (arg == "-o") nfp.origin = char_arr_to_complex(argv[arg_pos+1]);
+	else if (arg == "-cw") nfp.width = std::stoi(argv[arg_pos+1]);
+	else if (arg == "-ch") nfp.height = std::stoi(argv[arg_pos+1]);
+	//else if (arg == "-p") TODO, user defined palette
+	else if (arg == "--noshading") nfp.colour_iterations = false;
+	else if (arg == "--maxdepth") nfp.max_iter_depth = std::stoi(argv[arg_pos+1]);
+}
+
 int main(int argc, char* argv[]) {
 	
 	// Default NewtonFractal params
@@ -24,7 +73,6 @@ int main(int argc, char* argv[]) {
 	// Add command line arguments parsing
 	// -v: verbose, give progress updates and display polynomial
 	// -c [coefficients]: coefficients in ascending order
-	// -x[i] next argument is x^i coefficient, incompatible with -c
 	// -pw [int]: nfp.pixel_width
 	// -ph [int]: nfp.pixel_height
 	// -o [a+bi]: nfp.origin
@@ -34,30 +82,19 @@ int main(int argc, char* argv[]) {
 	// --noshading: nfp.colour_iterations = false
 	// --maxdepth [int]: max_iter_depth
 	
-	if (argc>1) {
-		std::vector<Complex> coeff;
-		std::regex expression("(.*)([+-].*)i");
-		for (int i=1; i<argc; i++) {
-			std::smatch match;
-			std::string str(argv[i]);
-			std::regex_match(str, match, expression);
-			switch (match.size()) {
-				case 2:
-					coeff.push_back(Complex(std::stod(match[1]))); break;
-				case 3:
-					coeff.push_back(Complex(std::stod(match.str(1)), std::stod(match.str(2)))); break;
-				default:
-					coeff.push_back(Complex()); break;
-			}
-		}
-		Polynomial p(coeff);
-		if (nfp.verbose) std::cout << p << std::endl;
-		if (p.get_degree() == 0) {
-			std::cout << "Cannot perform process on constant polynomial" << std::endl;
-			return 0;
-		}
-		nfp.p = p;
+	for (int i=1; i<argc; i++) {
+		parse_arg(i, argc, argv, nfp);
 	}
+	
+	
+	
+	
+	if (nfp.p.get_degree() == 0) {
+		std::cout << "Cannot perform process on constant polynomial" << std::endl;
+		return 0;
+	}
+	
+	if (nfp.verbose) std::cout << nfp.p << std::endl;
 	
 	NewtonFractal nf(nfp);
 	Colour *fractal_colour_array = nf.create_fractal();
