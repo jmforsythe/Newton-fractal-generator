@@ -9,7 +9,7 @@ private:
 	Polynomial _f;
 	Polynomial _fp;
 	Complex _root;
-	int _numIterations;
+	int _num_iterations;
 	int _err;
 
 public:
@@ -20,11 +20,11 @@ public:
 	Newton();
 	Newton(Polynomial p);
 	
-	int getError();
-	int getNumIterations();
-	Complex getRoot();
-	Polynomial getF();
-	Polynomial getFp();
+	int get_error();
+	size_t get_num_iterations();
+	Complex get_root();
+	Polynomial get_f();
+	Polynomial get_fp();
 	
 	void iterate(Complex z0);
 };
