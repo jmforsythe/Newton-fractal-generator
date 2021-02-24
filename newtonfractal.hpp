@@ -31,9 +31,9 @@ private:
 	Newton _iterator;
 	std::vector<Complex> _roots;
 		
-	bool _colorIterations, _verbose;
+	bool _color_iterations, _verbose;
 	
-	int _pixel_width, _pixel_height;
+	size_t _pixel_width, _pixel_height;
 	
 	std::vector<Colour> _palette;
 	size_t _num_colours;
@@ -41,13 +41,13 @@ private:
 public:	
 	NewtonFractal(NFParams &nfp);
 	
-	void printRoots();
+	void print_roots();
 	
-	int findRoot(Complex root);
+	int find_root(Complex root);
 	
-	Complex pixelToComplex(int i, int j);
+	Complex pixel_to_complex(int i, int j);
 	
-	Colour * createFractal();
+	Colour * create_fractal();
 };
 
 #endif
