@@ -18,14 +18,14 @@ Complex::Complex() {
 	_y = 0;
 }
 
-double Complex::getReal() const {
+double Complex::get_real() const {
 	return _x;
 }
-double Complex::getImag() const {
+double Complex::get_imag() const {
 	return _y;
 }
 
-std::string Complex::toString() const {
+std::string Complex::to_string() const {
 	std::stringstream s;
 	s << _x;
 	if (_y >= 0) s << "+" << _y;
@@ -48,35 +48,35 @@ Complex Complex::reciprocal() const {
 
 Complex operator+(const Complex &a, const Complex &b) {
 	double ar,br,ai,bi;
-	ar = a.getReal();
-	br = b.getReal();
-	ai = a.getImag();
-	bi = b.getImag();
+	ar = a.get_real();
+	br = b.get_real();
+	ai = a.get_imag();
+	bi = b.get_imag();
 	return Complex(ar + br, ai + bi);
 }
 
 Complex operator-(const Complex &a, const Complex &b) {
 	double ar,br,ai,bi;
-	ar = a.getReal();
-	br = b.getReal();
-	ai = a.getImag();
-	bi = b.getImag();
+	ar = a.get_real();
+	br = b.get_real();
+	ai = a.get_imag();
+	bi = b.get_imag();
 	return Complex(ar - br, ai - bi);
 }
 
 Complex operator*(const Complex &a, const Complex &b) {
 	double ar,br,ai,bi;
-	ar = a.getReal();
-	br = b.getReal();
-	ai = a.getImag();
-	bi = b.getImag();
+	ar = a.get_real();
+	br = b.get_real();
+	ai = a.get_imag();
+	bi = b.get_imag();
 	return Complex((ar*br) - (ai*bi), (ai*br) + (ar*bi));
 }
 
 Complex operator*(const Complex &a, const double &b) {
 	double ar,ai;
-	ar = a.getReal();
-	ai = a.getImag();
+	ar = a.get_real();
+	ai = a.get_imag();
 	return Complex(ar*b, ai*b);
 }
 
@@ -97,21 +97,10 @@ Complex operator/(const double &a, const Complex &b) {
 }
 
 bool operator==(const Complex &a, const Complex &b) {
-	return (a.getReal() == b.getReal() && a.getImag() == b.getImag());
+	return (a.get_real() == b.get_real() && a.get_imag() == b.get_imag());
 }
 
 std::ostream & operator<< (std::ostream & str, const Complex & z) {
-	str << z.toString();
+	str << z.to_string();
 	return str;
 }
-
-/*
-int main() {
-	Complex x(1.0, 2.0);
-	assert(x.toString() == "1+2i");
-	Complex y = x.conjugate();
-	assert(y == Complex(1.0, -2));
-	double m = x.abs2();
-	assert(m == (x*y).getReal());
-	return 0;
-}*/
