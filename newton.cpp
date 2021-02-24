@@ -9,11 +9,19 @@ Newton::Newton() {
 	std::vector<Complex> coeffs = {Complex()};
 	_f = Polynomial(coeffs);
 	_fp = _f.derivative();
+	_max_iter = 4000;
 }
 
 Newton::Newton(Polynomial p) {
 	_f = p;
 	_fp = _f.derivative();
+	_max_iter = 4000;
+}
+
+Newton::Newton(Polynomial p, int max_iter) {
+	_f = p;
+	_fp = _f.derivative();
+	_max_iter = max_iter;
 }
 
 int Newton::get_error() {
@@ -39,8 +47,8 @@ Polynomial Newton::get_fp() {
 void Newton::iterate(Complex z0) {
 	_num_iterations = 0;
 	Complex root = z0;
-	size_t i;
-	for (i=0; i<MAXITER; i++) {
+	int i;
+	for (i=0; i<_max_iter; i++) {
 		Complex fz = _f.evaluate(root);
 		if (fz.abs2() < TOL2) {
 			_root = root;
@@ -55,5 +63,5 @@ void Newton::iterate(Complex z0) {
 		}
 		root = root - (fz/fpz);
 	}
-	if (i >= MAXITER) _err = -2;
+	if (i >= _max_iter) _err = -2;
 }
