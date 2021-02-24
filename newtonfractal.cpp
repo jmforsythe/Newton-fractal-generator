@@ -6,7 +6,7 @@
 
 NewtonFractal::NewtonFractal(struct NFParams &nfp) {
 	_roots = std::vector<Complex>();
-	_iterator = Newton(nfp.p);
+	_iterator = Newton(nfp.p, nfp.max_iter_depth);
 	_origin = nfp.origin;
 	_width = nfp.width;
 	_height = nfp.height;
