@@ -10,6 +10,19 @@
 
 #include "colour.hpp"
 
+struct NFParams {
+	Polynomial p;
+	Complex origin; // top left of image
+	int pixel_height, pixel_width;
+	double width, height;
+	bool colour_iterations;
+	int max_iter_depth;
+	bool verbose;
+	size_t num_colours;
+	std::vector<Colour> palette;
+};
+
+
 class NewtonFractal {
 private:
 	Complex _origin;
@@ -18,13 +31,15 @@ private:
 	Newton _iterator;
 	std::vector<Complex> _roots;
 		
-	bool _colorIterations;
+	bool _colorIterations, _verbose;
 	
-public:
-	static const int NUMPIXELSWIDTH = 512;
-	static const int NUMPIXELSHEIGHT = 512;
+	int _pixel_width, _pixel_height;
 	
-	NewtonFractal(Polynomial &p, Complex &origin, double width, double height);
+	std::vector<Colour> _palette;
+	size_t _num_colours;
+	
+public:	
+	NewtonFractal(NFParams &nfp);
 	
 	void printRoots();
 	
@@ -32,7 +47,7 @@ public:
 	
 	Complex pixelToComplex(int i, int j);
 	
-	Colour * createFractal(bool colorIterations);
+	Colour * createFractal();
 };
 
 #endif

@@ -4,14 +4,20 @@
 
 #include "newtonfractal.hpp"
 
-NewtonFractal::NewtonFractal(Polynomial &p, Complex &origin, double width, double height) {
+NewtonFractal::NewtonFractal(struct NFParams &nfp) {
 	_roots = std::vector<Complex>();
-	_iterator = Newton(p);
-	_origin = origin;
-	_width = width;
-	_height = height;
-	_dzw = _width / (NUMPIXELSWIDTH - 1);
-	_dzh = _height / (NUMPIXELSHEIGHT - 1);
+	_iterator = Newton(nfp.p);
+	_origin = nfp.origin;
+	_width = nfp.width;
+	_height = nfp.height;
+	_pixel_height = nfp.pixel_height;
+	_pixel_width = nfp.pixel_width;
+	_dzh = _height / (_pixel_width - 1);
+	_dzw = _width / (_pixel_height - 1);
+	_colorIterations = nfp.colour_iterations;
+	_verbose = nfp.verbose;
+	_num_colours = nfp.num_colours;
+	_palette = nfp.palette;
 }
 
 void NewtonFractal::printRoots() {
@@ -31,19 +37,14 @@ Complex NewtonFractal::pixelToComplex(int i, int j) {
 	return Complex(_origin.getReal() + i*_dzw, _origin.getImag() - j*_dzh);
 }
 
-Colour * NewtonFractal::createFractal(bool colorIterations) {
-	const int numColours = 5;
-	const Colour colour_array[5] = {Colour(255,0,0), Colour(0,255,0), Colour(0,0,255), Colour(0,255,255), Colour(255,0,255)};
-
-	Colour *out_array = new Colour [NUMPIXELSWIDTH * NUMPIXELSHEIGHT];
-	
-	_colorIterations = colorIterations;
+Colour * NewtonFractal::createFractal() {
+	Colour *out_array = new Colour [_pixel_width * _pixel_height];
 	
 	int i, j;
-	for (i=0; i<NUMPIXELSHEIGHT; i++) {
-		for (j=0; j<NUMPIXELSWIDTH; j++) {
+	for (i=0; i<_pixel_height; i++) {
+		for (j=0; j<_pixel_width; j++) {
 			_iterator.iterate(pixelToComplex(j,i));
-			size_t array_index = i*NUMPIXELSWIDTH + j;
+			size_t array_index = i*_pixel_width + j;
 			Colour c;
 			if (_iterator.getError() == -2) {
 				out_array[array_index] = Colour(255,255,255);
@@ -54,7 +55,7 @@ Colour * NewtonFractal::createFractal(bool colorIterations) {
 					_roots.push_back(root);
 					rootIndex = _roots.size() - 1;
 				}
-				c = colour_array[rootIndex % numColours];
+				c = _palette[rootIndex % _num_colours];
 				if (_colorIterations) {
 					Colour c_scaled(c);
 					for (int k=0; k<_iterator.getNumIterations(); k++) {
@@ -66,7 +67,8 @@ Colour * NewtonFractal::createFractal(bool colorIterations) {
 				}
 			}
 		}
-		if (i%100 == 0) std::cout << i << "/" << NUMPIXELSHEIGHT << std::endl;
+		if (_verbose && i%100 == 0) std::cout << i << "/" << _pixel_height << std::endl;
 	}
+	if (_verbose) std::cout << _pixel_height << "/" << _pixel_height << std::endl;
 	return out_array;
 }
