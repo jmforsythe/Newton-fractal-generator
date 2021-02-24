@@ -7,3 +7,7 @@ newtonfractal: $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 $(OBJECTS): colour.hpp newtonfractal.hpp newton.hpp polynomial.hpp complex.hpp
+
+clean :
+	-rm $(OBJECTS)
+	-rm newtonfractal
