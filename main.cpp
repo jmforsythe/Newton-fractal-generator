@@ -41,6 +41,17 @@ Polynomial parse_coeff(int arg_pos, int last_pos, char* argv[]) {
 }
 
 void parse_arg(int arg_pos, int argc, char* argv[], struct NFParams &nfp) {
+	// -v: verbose, give progress updates and display polynomial
+	// -c [coefficients]: coefficients in ascending order
+	// -pw [int]: nfp.pixel_width
+	// -ph [int]: nfp.pixel_height
+	// -o [a+bi]: nfp.origin
+	// -cw [double]: nfp.width
+	// -ch [double]: nfp.height
+	// -p [filename]: path to file containing colour palette
+	// --noshading: nfp.colour_iterations = false
+	// --maxdepth [int]: max_iter_depth
+	
 	std::string arg = argv[arg_pos];
 	if (arg == "-v") nfp.verbose=true;
 	else if (arg == "-c") nfp.p = parse_coeff(arg_pos+1, get_next_flag(arg_pos, argc, argv), argv);
@@ -69,18 +80,7 @@ int main(int argc, char* argv[]) {
 	nfp.colour_iterations = true;
 	nfp.max_iter_depth = 4000;
 	nfp.verbose = false;
-	
-	// Add command line arguments parsing
-	// -v: verbose, give progress updates and display polynomial
-	// -c [coefficients]: coefficients in ascending order
-	// -pw [int]: nfp.pixel_width
-	// -ph [int]: nfp.pixel_height
-	// -o [a+bi]: nfp.origin
-	// -cw [double]: nfp.width
-	// -ch [double]: nfp.height
-	// -p [filename]: path to file containing colour palette
-	// --noshading: nfp.colour_iterations = false
-	// --maxdepth [int]: max_iter_depth
+
 	
 	for (int i=1; i<argc; i++) {
 		parse_arg(i, argc, argv, nfp);
